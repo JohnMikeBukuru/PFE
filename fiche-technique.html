@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiche Technique - Studio Créatif Numérique</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            line-height: 1.6;
+        }
+
+        .document {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+
+        .header .dates {
+            margin-top: 20px;
+            font-size: 1.2em;
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .alert-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 10px;
+        }
+
+        .alert-box.success {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+
+        .alert-box.info {
+            background: #d1ecf1;
+            border-left-color: #17a2b8;
+        }
+
+        .alert-box h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+
+        .alert-box p {
+            color: #333;
+            margin: 5px 0;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin: 40px 0 20px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #764ba2;
+            font-size: 1.5em;
+            margin: 25px 0 15px 0;
+        }
+
+        p {
+            color: #333;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+
+        .checklist {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 15px;
+            margin: 10px 0;
+            background: white;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.2s;
+        }
+
+        .checklist-item:hover {
+            transform: translateX(5px);
+        }
+
+        .checkbox {
+            width: 30px;
+            height: 30px;
+            border: 3px solid #667eea;
+            border-radius: 5px;
+            margin-right: 15px;
+            flex-shrink: 0;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .checkbox.checked {
+            background: #667eea;
+        }
+
+        .checkbox.checked::after {
+            content: "✓";
+            color: white;
+            font-size: 1.5em;
+            font-weight: bold;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .item-content {
+            flex: 1;
+        }
+
+        .item-title {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .item-details {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .specs-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-size: 1.1em;
+        }
+
+        .specs-table td {
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .specs-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .badge.required {
+            background: #dc3545;
+            color: white;
+        }
+
+        .badge.recommended {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .badge.optional {
+            background: #6c757d;
+            color: white;
+        }
+
+        .software-card {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .software-item {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+
+        .software-item h4 {
+            color: #667eea;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .software-item .platform {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .software-item .download {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: transform 0.2s;
+        }
+
+        .software-item .download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 30px 0;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: #667eea;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -32px;
+            top: 5px;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: #667eea;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #667eea;
+        }
+
+        .timeline-content {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .timeline-content h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .contact-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .contact-box h3 {
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .contact-box a {
+            color: white;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .print-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #667eea;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: none;
+            font-size: 1.1em;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .print-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .print-button {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .document {
+                border-radius: 0;
+            }
+            .content {
+                padding: 20px;
+            }
+            .header h1 {
+                font-size: 1.8em;
+            }
+            .software-card {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="document">
+        <div class="header">
+            <h1>🎬 Studio Créatif Numérique</h1>
+            <p class="subtitle">Fiche Technique - Prérequis Matériel et Logiciels</p>
+            <div class="dates">
+                📅 Stage du [Date de début] au [Date de fin]<br>
+                ⏰ Horaire : 10h00 - 16h30 (pause 12h-14h)
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="alert-box">
+                <h3>⚠️ À lire attentivement et à compléter AVANT le stage</h3>
+                <p><strong>Échéance :</strong> Tous les prérequis doivent être validés 48h avant le début du stage</p>
+                <p><strong>Pourquoi ?</strong> Pour éviter les pertes de temps techniques pendant les sessions et profiter pleinement du stage</p>
+            </div>
+
+            <h2>📋 Checklist de Préparation</h2>
+            <p>Cochez chaque élément au fur et à mesure de votre préparation :</p>
+
+            <div class="checklist">
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">1. Matériel informatique vérifié</div>
+                        <div class="item-details">Ordinateur ou tablette avec les spécifications minimales requises</div>
+                    </div>
+                </div>
+
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">2. Connexion internet testée</div>
+                        <div class="item-details">Speed test réalisé : minimum 5 Mbps en upload</div>
+                    </div>
+                </div>
+
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">3. Logiciels installés et testés</div>
+                        <div class="item-details">DaVinci Resolve ou CapCut + Audacity + Canva ouvert</div>
+                    </div>
+                </div>
+
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">4. Comptes créés</div>
+                        <div class="item-details">Google Classroom, Discord, Canva, Zoom</div>
+                    </div>
+                </div>
+
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">5. Audio/Vidéo fonctionnels</div>
+                        <div class="item-details">Micro, webcam, haut-parleurs/casque testés sur Zoom</div>
+                    </div>
+                </div>
+
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">6. Espace de travail préparé</div>
+                        <div class="item-details">Lieu calme, éclairage suffisant, bureau dégagé</div>
+                    </div>
+                </div>
+            </div>
+
+            <h2>💻 Spécifications Matérielles</h2>
+
+            <h3>Configuration Minimale <span class="badge required">OBLIGATOIRE</span></h3>
+            <table class="specs-table">
+                <tr>
+                    <th>Composant</th>
+                    <th>Minimum requis</th>
+                    <th>Recommandé</th>
+                </tr>
+                <tr>
+                    <td><strong>Système d'exploitation</strong></td>
+                    <td>Windows 10 / macOS 10.15 / iPad OS 14</td>
+                    <td>Windows 11 / macOS 13+ / iPad OS 16+</td>
+                </tr>
+                <tr>
+                    <td><strong>Processeur</strong></td>
+                    <td>Intel i5 / AMD Ryzen 5 / Apple M1</td>
+                    <td>Intel i7 / AMD Ryzen 7 / Apple M2+</td>
+                </tr>
+                <tr>
+                    <td><strong>Mémoire RAM</strong></td>
+                    <td>8 Go</td>
+                    <td>16 Go ou plus</td>
+                </tr>
+                <tr>
+                    <td><strong>Espace disque libre</strong></td>
+                    <td>15 Go minimum</td>
+                    <td>30 Go ou plus (pour projets)</td>
+                </tr>
+                <tr>
+                    <td><strong>Carte graphique</strong></td>
+                    <td>GPU intégré (Intel HD, AMD Vega)</td>
+                    <td>GPU dédié (NVIDIA, AMD Radeon)</td>
+                </tr>
+                <tr>
+                    <td><strong>Écran</strong></td>
+                    <td>13 pouces minimum, 1366x768</td>
+                    <td>15 pouces+, Full HD (1920x1080)</td>
+                </tr>
+            </table>
+
+            <div class="alert-box info">
+                <h3>📱 Alternative Mobile/Tablette</h3>
+                <p><strong>Si votre ordinateur ne répond pas aux spécifications :</strong></p>
+                <p>✅ Tablette (iPad, Samsung Galaxy Tab) avec clavier externe acceptable</p>
+                <p>✅ Utilisez CapCut (application mobile) au lieu de DaVinci Resolve</p>
+                <p>⚠️ Smartphone seul = fortement déconseillé (écran trop petit pour montage confortable)</p>
+            </div>
+
+            <h3>Périphériques Audio/Vidéo</h3>
+            <table class="specs-table">
+                <tr>
+                    <th>Périphérique</th>
+                    <th>Niveau</th>
+                    <th>Détails</th>
+                </tr>
+                <tr>
+                    <td><strong>Webcam</strong></td>
+                    <td><span class="badge required">OBLIGATOIRE</span></td>
+                    <td>Webcam intégrée ou externe (720p minimum). Alternative : smartphone en webcam via DroidCam</td>
+                </tr>
+                <tr>
+                    <td><strong>Microphone</strong></td>
+                    <td><span class="badge required">OBLIGATOIRE</span></td>
+                    <td>Micro intégré OK. Recommandé : casque avec micro ou écouteurs de smartphone</td>
+                </tr>
+                <tr>
+                    <td><strong>Casque/Écouteurs</strong></td>
+                    <td><span class="badge recommended">RECOMMANDÉ</span></td>
+                    <td>Évite les échos en visio et permet un meilleur mixage audio</td>
+                </tr>
+                <tr>
+                    <td><strong>Trépied smartphone</strong></td>
+                    <td><span class="badge optional">OPTIONNEL</span></td>
+                    <td>Pour tournage stable. Alternative : pile de livres, support DIY</td>
+                </tr>
+                <tr>
+                    <td><strong>Lampe bureau/anneau</strong></td>
+                    <td><span class="badge optional">OPTIONNEL</span></td>
+                    <td>Améliore l'éclairage lors du tournage. Alternative : lumière naturelle</td>
+                </tr>
+            </table>
+
+            <h2>🌐 Connexion Internet</h2>
+            
+            <div class="alert-box success">
+                <h3>✅ Test de connexion obligatoire</h3>
+                <p><strong>Rendez-vous sur :</strong> <a href="https://fast.com" target="_blank">https://fast.com</a> ou <a href="https://speedtest.net" target="_blank">https://speedtest.net</a></p>
+                <p><strong>Vérifiez :</strong></p>
+                <p>• <strong>Débit descendant (Download) :</strong> minimum 10 Mbps ✅</p>
+                <p>• <strong>Débit montant (Upload) :</strong> minimum 5 Mbps ✅ (crucial pour partage écran)</p>
+                <p>• <strong>Ping :</strong> inférieur à 100 ms (idéalement < 50 ms)</p>
+            </div>
+
+            <p><strong>⚠️ Connexion instable ou limitée ?</strong></p>
+            <ul style="margin-left: 20px; color: #333;">
+                <li>Privilégiez une connexion filaire (câble Ethernet) plutôt que WiFi</li>
+                <li>Téléchargez les ressources en avance (mode hors ligne possible)</li>
+                <li>Désactivez votre caméra si nécessaire (audio seul acceptable)</li>
+                <li>Prévenez le formateur dès le Jour 1 pour adaptations</li>
+            </ul>
+
+            <h2>🛠️ Logiciels à Installer</h2>
+            <p><strong>Installation à effectuer AVANT le premier jour</strong> (comptez 1-2h pour tout installer)</p>
+
+            <div class="software-card">
+                <div class="software-item">
+                    <h4>🎬 DaVinci Resolve 18</h4>
+                    <p class="platform">Windows / macOS / Linux</p>
+                    <p><span class="badge required">OBLIGATOIRE</span></p>
+                    <p style="font-size: 0.95em; margin-top: 10px;">Logiciel de montage vidéo professionnel (version gratuite suffisante)</p>
+                    <p style="font-size: 0.9em; color: #666;">Taille : ~3 Go | Durée installation : 30 min</p>
+                    <a href="https://www.blackmagicdesign.com/products/davinciresolve" target="_blank" class="download">📥 Télécharger</a>
+                </div>
+
+                <div class="software-item">
+                    <h4>✂️ CapCut (Alternative)</h4>
+                    <p class="platform">Windows / macOS / iOS / Android</p>
+                    <p><span class="badge optional">SI PC FAIBLE</span></p>
+                    <p style="font-size: 0.95em; margin-top: 10px;">Montage vidéo léger et intuitif (si DaVinci trop lourd pour votre machine)</p>
+                    <p style="font-size: 0.9em; color: #666;">Taille : ~500 Mo | Gratuit</p>
+                    <a href="https://www.capcut.com" target="_blank" class="download">📥 Télécharger</a>
+                </div>
+
+                <div class="software-item">
+                    <h4>🎙️ Audacity</h4>
+                    <p class="platform">Windows / macOS / Linux</p>
+                    <p><span class="badge required">OBLIGATOIRE</span></p>
+                    <p style="font-size: 0.95em; margin-top: 10px;">Enregistrement et édition audio (podcasts, voix-off)</p>
+                    <p style="font-size: 0.9em; color: #666;">Taille : ~50 Mo | Open source</p>
+                    <a href="https://www.audacityteam.org" target="_blank" class="download">📥 Télécharger</a>
+                </div>
+
+                <div class="software-item">
+                    <h4>🎨 Canva</h4>
+                    <p class="platform">Web (navigateur) / iOS / Android</p>
+                    <p><span class="badge required">OBLIGATOIRE</span></p>
+                    <p style="font-size: 0.95em; margin-top: 10px;">Design graphique en ligne (miniatures, bannières)</p>
+                    <p style="font-size: 0.9em; color: #666;">Pas d'installation | Créer un compte gratuit</p>
+                    <a href="https://www.canva.com" target="_blank" class="download">🌐 Créer un compte</a>
+                </div>
+
+                <div class="software-item">
+                    <h4>💬 Discord</h4>
+                    <p class="platform">Windows / macOS / Web / iOS / Android</p>
+                    <p><span class="badge required">OBLIGATOIRE</span></p>
+                    <p style="font-size: 0.95em; margin-top: 10px;">Communication asynchrone et entraide entre participants</p>
+                    <p style="font-size: 0.9em; color: #666;">Taille : ~100 Mo | Gratuit</p>
+                    <a href="https://discord.com" target="_blank" class="download">📥 Télécharger</a>
+                </div>
+
+                <div class="software-item">
+                    <h4>📹 Zoom</h4>
+                    <p class="platform">Windows / macOS / Web / iOS / Android</p>
+                    <p><span class="badge required">OBLIGATOIRE</span></p>
+                    <p style="font-size: 0.95em; margin-top: 10px;">Visioconférence pour les sessions synchrones</p>
+                    <p style="font-size: 0.9em; color: #666;">Taille : ~50 Mo | Compte gratuit</p>
+                    <a href="https://zoom.us" target="_blank" class="download">📥 Télécharger</a>
+                </div>
+            </div>
+
+            <div class="alert-box info">
+                <h3>💡 Astuce installation</h3>
+                <p><strong>Testez chaque logiciel après installation :</strong></p>
+                <p>✅ DaVinci/CapCut : Créez un nouveau projet vide et importez une vidéo test</p>
+                <p>✅ Audacity : Enregistrez 5 secondes de voix et réécoutez</p>
+                <p>✅ Canva : Créez un design vide et ajoutez un élément</p>
+                <p>✅ Zoom : Rejoignez une salle de test (lien fourni par email)</p>
+            </div>
+
+            <h2>📝 Comptes à Créer</h2>
+            <p>Créez ces comptes <strong>avec la même adresse email</strong> (pour simplifier la gestion) :</p>
+
+            <div class="checklist">
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Google Classroom</div>
+                        <div class="item-details">Code de classe fourni par email 3 jours avant le stage</div>
+                    </div>
+                </div>
+
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Discord</div>
+                        <div class="item-details">Lien d'invitation au serveur privé envoyé 3 jours avant</div>
+                    </div>
+                </div>
+
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Canva</div>
+                        <div class="item-details">Inscription gratuite sur canva.com (version gratuite suffisante)</div>
+                    </div>
+                </div>
+
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">Zoom</div>
+                        <div class="item-details">Compte gratuit sur zoom.us (pas d'abonnement nécessaire)</div>
+                    </div>
+                </div>
+            </div>
+
+            <h2>📅 Calendrier de Préparation</h2>
+            <p>Suivez ce planning pour être prêt(e) le jour J :</p>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>J-5 : Réception de cette fiche</h4>
+                        <p>Lisez attentivement tous les prérequis et notez les éventuels problèmes</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>J-4 : Installation des logiciels</h4>
+                        <p>Installez DaVinci/CapCut, Audacity, Discord, Zoom. Testez chaque application</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>J-3 : Création des comptes</h4>
+                        <p>Inscrivez-vous sur Canva, Classroom (code reçu par email), Discord (lien reçu)</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>J-2 : Test technique complet</h4>
+                        <p>Rejoignez la salle Zoom de test (15h-17h, lien par email). Vérifiez audio, vidéo, partage d'écran</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>J-1 : Préparation finale</h4>
+                        <p>Organisez votre espace de travail, chargez vos appareils, préparez cahier + stylo</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h4>JOUR J : C'est parti ! 🚀</h4>
+                        <p>Connectez-vous 10 minutes avant 10h sur Zoom. Lien envoyé à 9h30 par email</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>❓ FAQ - Questions Fréquentes</h2>
+
+            <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin: 20px 0;">
+                <h3 style="color: #667eea; margin-top: 0;">Mon ordinateur est trop vieux, puis-je participer ?</h3>
+                <p><strong>Réponse :</strong> Oui ! Utilisez CapCut (beaucoup plus léger) au lieu de DaVinci Resolve. Si vous avez une tablette récente, elle suffit également.</p>
+
+                <h3 style="color: #667eea; margin-top: 25px;">Je n'ai pas de webcam, est-ce bloquant ?</h3>
+                <p><strong>Réponse :</strong> Non bloquant mais fortement recommandé pour l'interaction. Alternative : utilisez votre smartphone comme webcam via l'app DroidCam (Android) ou EpocCam (iOS).</p>
+
+                <h3 style="color: #667eea; margin-top: 25px;">Ma connexion est limitée (4G, débit faible), que faire ?</h3>
+                <p><strong>Réponse :</strong> Prévenez-nous dès le début. Vous pourrez télécharger toutes les ressources en avance et suivre avec caméra éteinte si nécessaire. Les sessions sont enregistrées pour replay.</p>
+
+                <h3 style="color: #667eea; margin-top: 25px;">Je ne sais pas installer un logiciel, comment faire ?</h3>
+                <p><strong>Réponse :</strong> Une session d'aide technique est organisée J-2 (15h-17h) en visio. Vous pouvez aussi nous contacter par email ou Discord.</p>
+
+                <h3 style="color: #667eea; margin-top: 25px;">Dois-je acheter des licences payantes ?</h3>
+                <p><strong>Réponse :</strong> Non, absolument TOUS les logiciels utilisés sont gratuits (versions gratuites suffisantes).</p>
+
+                <h3 style="color: #667eea; margin-top: 25px;">Combien d'espace disque prévoir pour mes projets ?</h3>
+                <p><strong>Réponse :</strong> Environ 10-15 Go pour les 6 jours (rushes vidéo + projets montés). Vérifiez votre espace disponible avant le stage.</p>
+            </div>
+
+            <h2>📧 Support Technique Avant le Stage</h2>
+
+            <div class="contact-box">
+                <h3>🆘 Besoin d'aide pour la préparation ?</h3>
+                <p style="font-size: 1.2em; margin: 15px 0;">
+                    <strong>📧 Email :</strong> <a href="mailto:support@studiocreative.fr">support@studiocreative.fr</a><br>
+                    <strong>💬 Discord :</strong> Canal #aide-technique (après inscription)<br>
+                    <strong>📞 Session d'aide en visio :</strong> J-2, 15h-17h (lien par email)
+                </p>
+                <p style="margin-top: 20px; font-size: 0.95em; opacity: 0.9;">
+                    Temps de réponse moyen : 24h (jours ouvrés)<br>
+                    N'attendez pas la dernière minute pour nous contacter !
+                </p>
+            </div>
+
+            <div class="alert-box success" style="margin-top: 40px;">
+                <h3>✅ Validation de votre préparation</h3>
+                <p><strong>Étape finale (J-2) :</strong></p>
+                <p>📋 Remplissez le formulaire de validation technique : <strong>[Lien Google Forms envoyé par email]</strong></p>
+                <p>Ce formulaire nous permet de vérifier que vous êtes prêt(e) et d'identifier d'éventuels problèmes à résoudre avant le Jour 1.</p>
+                <p style="margin-top: 15px;"><strong>Questions du formulaire :</strong></p>
+                <ul style="margin-left: 20px;">
+                    <li>Avez-vous installé tous les logiciels obligatoires ?</li>
+                    <li>Votre test de connexion est-il supérieur à 5 Mbps upload ?</li>
+                    <li>Avez-vous testé votre micro et webcam sur Zoom ?</li>
+                    <li>Rencontrez-vous des difficultés techniques ? (description libre)</li>
+                </ul>
+            </div>
+
+            <h2>📦 Matériel Complémentaire (à prévoir)</h2>
+            <p>Pour profiter pleinement du stage, ayez à portée de main :</p>
+
+            <div class="checklist">
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">📓 Cahier ou bloc-notes + stylo</div>
+                        <div class="item-details">Pour noter les astuces, raccourcis clavier, idées créatives</div>
+                    </div>
+                </div>
+
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">💧 Bouteille d'eau et snacks</div>
+                        <div class="item-details">Restez hydraté(e) et énergisé(e) pendant les 4h de travail quotidien</div>
+                    </div>
+                </div>
+
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">🔌 Chargeurs (ordinateur + smartphone)</div>
+                        <div class="item-details">Évitez les coupures de batterie en pleine session</div>
+                    </div>
+                </div>
+
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">🎧 Casque confortable</div>
+                        <div class="item-details">Pour 2h de visio, privilégiez un casque léger (pas d'écouteurs intra-auriculaires sur longue durée)</div>
+                    </div>
+                </div>
+
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">📱 Smartphone chargé</div>
+                        <div class="item-details">Servira de caméra pour tournage (Jour 2) ou webcam de secours</div>
+                    </div>
+                </div>
+
+                <div class="checklist-item" onclick="toggleCheck(this)">
+                    <div class="checkbox"></div>
+                    <div class="item-content">
+                        <div class="item-title">🎨 Objets pour tournage créatif</div>
+                        <div class="item-details">Optionnel : objets du quotidien pour exercices (livre, plante, tasse...)</div>
+                    </div>
+                </div>
+            </div>
+
+            <h2>🌟 Conseils pour Réussir</h2>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 30px 0;">
+                <div class="software-item">
+                    <h4>🧘 Préparez votre espace</h4>
+                    <p style="font-size: 0.95em; margin-top: 10px;">
+                        Choisissez un lieu calme où vous ne serez pas dérangé(e) pendant 4h/jour. 
+                        Informez votre entourage de vos horaires de stage.
+                    </p>
+                </div>
+
+                <div class="software-item">
+                    <h4>💡 Éclairage optimal</h4>
+                    <p style="font-size: 0.95em; margin-top: 10px;">
+                        Installez-vous face à une fenêtre ou avec une lumière derrière votre écran 
+                        (évitez le contre-jour qui assombrit votre visage en visio).
+                    </p>
+                </div>
+
+                <div class="software-item">
+                    <h4>🔇 Réduisez les bruits</h4>
+                    <p style="font-size: 0.95em; margin-top: 10px;">
+                        Fermez portes et fenêtres, désactivez notifications de téléphone pendant les sessions. 
+                        Un environnement calme favorise la concentration.
+                    </p>
+                </div>
+
+                <div class="software-item">
+                    <h4>⏰ Soyez ponctuel(le)</h4>
+                    <p style="font-size: 0.95em; margin-top: 10px;">
+                        Connectez-vous 10 minutes avant chaque session. 
+                        Les retards perturbent le groupe et vous font manquer des consignes importantes.
+                    </p>
+                </div>
+
+                <div class="software-item">
+                    <h4>🤝 Participez activement</h4>
+                    <p style="font-size: 0.95em; margin-top: 10px;">
+                        Caméra allumée, posez des questions, partagez vos créations. 
+                        Plus vous vous impliquez, plus vous progressez !
+                    </p>
+                </div>
+
+                <div class="software-item">
+                    <h4>💾 Sauvegardez régulièrement</h4>
+                    <p style="font-size: 0.95em; margin-top: 10px;">
+                        Enregistrez vos projets toutes les 15 minutes. 
+                        Utilisez Google Drive ou une clé USB pour dupliquer vos fichiers importants.
+                    </p>
+                </div>
+            </div>
+
+            <h2>📚 Ressources Pré-stage (Optionnel)</h2>
+            <p>Pour arriver encore mieux préparé(e), consultez ces ressources <strong>(pas obligatoire, mais conseillé si vous avez du temps)</strong> :</p>
+
+            <div style="background: #f8f9fa; padding: 25px; border-radius: 15px; margin: 20px 0;">
+                <h3 style="color: #667eea; margin-top: 0;">🎬 Tutoriels YouTube à regarder</h3>
+                <ul style="margin-left: 20px; color: #333;">
+                    <li><strong>DaVinci Resolve pour débutants</strong> (15 min) - Aperçu de l'interface</li>
+                    <li><strong>Les bases du cadrage vidéo</strong> (10 min) - Règle des tiers expliquée</li>
+                    <li><strong>Storytelling viral</strong> (20 min) - Analyse de vidéos TikTok à succès</li>
+                </ul>
+                <p style="margin-top: 15px; font-size: 0.95em; color: #666;">
+                    💡 Les liens exacts seront envoyés par email 1 semaine avant le stage
+                </p>
+
+                <h3 style="color: #667eea; margin-top: 25px;">📖 Articles recommandés</h3>
+                <ul style="margin-left: 20px; color: #333;">
+                    <li>10 erreurs courantes en montage vidéo débutant</li>
+                    <li>Comment choisir une musique libre de droits</li>
+                    <li>Les secrets des miniatures YouTube qui cartonnent</li>
+                </ul>
+
+                <h3 style="color: #667eea; margin-top: 25px;">💭 Réflexion créative</h3>
+                <p style="color: #333;">Commencez à réfléchir à votre projet final : Quel message voulez-vous transmettre ? 
+                Quel format vous attire (court-métrage, vlog, tutoriel, documentaire) ? Notez vos idées !</p>
+            </div>
+
+            <div class="alert-box" style="margin-top: 40px;">
+                <h3>⏰ Rappel des Échéances Importantes</h3>
+                <p><strong>J-5 :</strong> Lecture de cette fiche et début des installations</p>
+                <p><strong>J-3 :</strong> Réception des codes d'accès (Classroom, Discord)</p>
+                <p><strong>J-2 (15h-17h) :</strong> Session d'aide technique en visio (optionnelle mais recommandée)</p>
+                <p><strong>J-2 (avant 18h) :</strong> Validation du formulaire de préparation ✅</p>
+                <p><strong>J-1 :</strong> Réception du lien Zoom et du planning détaillé</p>
+                <p><strong>Jour J (9h50) :</strong> Connexion à la salle Zoom</p>
+            </div>
+
+            <div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white; padding: 40px; border-radius: 20px; text-align: center; margin-top: 50px;">
+                <h2 style="color: white; font-size: 2.2em; margin-bottom: 20px;">🎉 Vous êtes prêt(e) !</h2>
+                <p style="font-size: 1.3em; line-height: 1.8; color: white;">
+                    Une fois tous les éléments de cette fiche validés, vous êtes fin prêt(e) pour démarrer l'aventure créative !
+                </p>
+                <p style="font-size: 1.2em; margin-top: 20px; color: white;">
+                    On a hâte de découvrir vos créations 🚀
+                </p>
+                <p style="font-size: 1em; margin-top: 30px; opacity: 0.9; color: white;">
+                    L'équipe Studio Créatif Numérique
+                </p>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px; padding: 20px; background: #f8f9fa; border-radius: 10px;">
+                <p style="font-size: 0.9em; color: #666;">
+                    <strong>Document version 1.0</strong> - Dernière mise à jour : [Date]<br>
+                    En cas de questions ou modifications, consultez votre email ou le canal Discord #annonces
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <button 
+    class="print-button" onclick="window.print()">🖨️ Imprimer cette fiche</button>
+
+    <script>
+        function toggleCheck(item) {
+            const checkbox = item.querySelector('.checkbox');
+            checkbox.classList.toggle('checked');
+            
+            // Sauvegarder l'état dans localStorage
+            const itemTitle = item.querySelector('.item-title').textContent;
+            const isChecked = checkbox.classList.contains('checked');
+            localStorage.setItem(itemTitle, isChecked);
+        }
+
+        // Restaurer l'état au chargement de la page
+        window.addEventListener('DOMContentLoaded', function() {
+            const items = document.querySelectorAll('.checklist-item');
+            items.forEach(item => {
+                const itemTitle = item.querySelector('.item-title').textContent;
+                const isChecked = localStorage.getItem(itemTitle) === 'true';
+                if (isChecked) {
+                    item.querySelector('.checkbox').classList.add('checked');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

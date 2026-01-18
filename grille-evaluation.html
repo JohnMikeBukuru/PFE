@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grille d'Évaluation - Studio Créatif Numérique</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 50px;
+        }
+
+        .intro {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            border-left: 5px solid #667eea;
+        }
+
+        .intro h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .intro p {
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 2.3em;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.8em;
+            margin: 30px 0 20px 0;
+        }
+
+        /* Grille d'évaluation principale */
+        .eval-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .eval-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 15px;
+            text-align: left;
+            font-size: 1.1em;
+        }
+
+        .eval-table th.center {
+            text-align: center;
+        }
+
+        .eval-table td {
+            padding: 20px 15px;
+            border: 2px solid #e0e0e0;
+            font-size: 1.05em;
+        }
+
+        .eval-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .eval-table .criteria {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .eval-table .score {
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #764ba2;
+        }
+
+        .eval-table .total-row {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+
+        .eval-table .total-row td {
+            border-color: #f093fb;
+        }
+
+        /* Barème détaillé */
+        .rubric {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .rubric h4 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .rubric-grid {
+            display: grid;
+            grid-template-columns: 1fr 4fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .rubric-level {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .rubric-level strong {
+            color: #667eea;
+            font-size: 1.1em;
+        }
+
+        .rubric-desc {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #764ba2;
+        }
+
+        /* Badges de notation */
+        .badge {
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-right: 10px;
+        }
+
+        .badge.excellent {
+            background: #28a745;
+            color: white;
+        }
+
+        .badge.good {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .badge.satisfactory {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .badge.insufficient {
+            background: #dc3545;
+            color: white;
+        }
+
+        /* Conseils pratiques */
+        .tips {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #28a745;
+        }
+
+        .tips h4 {
+            color: #28a745;
+            font-size: 1.4em;
+            margin-bottom: 15px;
+        }
+
+        .tips ul {
+            margin-left: 20px;
+        }
+
+        .tips li {
+            margin-bottom: 10px;
+            font-size: 1.05em;
+            line-height: 1.6;
+        }
+
+        /* Boutons d'action */
+        .actions {
+            display: flex;
+            gap: 20px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1em;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 3px solid #667eea;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Impression */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+            }
+            .actions, .btn {
+                display: none;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            .content {
+                padding: 30px 20px;
+            }
+            .rubric-grid {
+                grid-template-columns: 1fr;
+            }
+            .eval-table {
+                font-size: 0.9em;
+            }
+            .eval-table th, .eval-table td {
+                padding: 10px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📊 Grille d'Évaluation</h1>
+            <p>Studio Créatif Numérique - Formation à Distance</p>
+            <p style="margin-top: 15px; font-size: 1.1em; opacity: 0.9;">Guide d'évaluation pour formateurs</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Introduction -->
+            <div class="intro">
+                <h2>📋 À propos de cette grille</h2>
+                <p>Cette grille d'évaluation a été conçue pour permettre aux formateurs d'évaluer de manière objective et constructive les projets finaux des participants au stage "Studio Créatif Numérique".</p>
+                <p><strong>Principes directeurs :</strong></p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>L'évaluation valorise autant le processus créatif que le résultat technique</li>
+                    <li>Chaque critère est noté sur 3 points avec des descripteurs clairs</li>
+                    <li>Le feedback doit être spécifique, constructif et encourageant</li>
+                    <li>Les participants reçoivent leur évaluation dans les 24h avec commentaires personnalisés</li>
+                </ul>
+            </div>
+
+            <!-- Section 1: Grille Globale -->
+            <section class="section">
+                <h2>1. Grille d'Évaluation Globale</h2>
+                <p><strong>Projet final évalué :</strong> Création de contenu numérique (vidéo, podcast ou design graphique) réalisée pendant les 6 jours de formation.</p>
+
+                <table class="eval-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 35%;">Critère</th>
+                            <th style="width: 50%;">Descriptif</th>
+                            <th class="center" style="width: 15%;">Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="criteria">1. Narration et Storytelling</td>
+                            <td>La création raconte une histoire claire, structurée et engageante. Le message est compréhensible et captivant.</td>
+                            <td class="score">/3</td>
+                        </tr>
+                        <tr>
+                            <td class="criteria">2. Maîtrise Technique</td>
+                            <td>Utilisation correcte des outils (montage, édition audio, design). Qualité technique du rendu final (image, son, composition).</td>
+                            <td class="score">/3</td>
+                        </tr>
+                        <tr>
+                            <td class="criteria">3. Créativité et Originalité</td>
+                            <td>Approche créative personnelle, originalité du concept, prise de risque artistique, innovation dans le traitement.</td>
+                            <td class="score">/3</td>
+                        </tr>
+                        <tr>
+                            <td class="criteria">4. Rythme et Dynamisme</td>
+                            <td>Le contenu maintient l'attention, tempo adapté au format, transitions fluides, cohérence dans le déroulement.</td>
+                            <td class="score">/3</td>
+                        </tr>
+                        <tr>
+                            <td class="criteria">5. Identité Visuelle/Sonore</td>
+                            <td>Cohérence esthétique, choix de couleurs/sons/typographies pertinents, harmonie générale du projet.</td>
+                            <td class="score">/3</td>
+                        </tr>
+                        <tr>
+                            <td class="criteria">6. Éthique et Responsabilité</td>
+                            <td>Respect des droits d'auteur, utilisation de ressources libres, crédits mentionnés, message responsable.</td>
+                            <td class="score">/3</td>
+                        </tr>
+                        <tr>
+                            <td class="criteria">7. Respect des Consignes</td>
+                            <td>Durée respectée, format d'export correct, dépôt dans les délais, présence des éléments demandés.</td>
+                            <td class="score">/3</td>
+                        </tr>
+                        <tr>
+                            <td class="criteria">8. Progression et Engagement</td>
+                            <td>Implication pendant le stage, participation aux ateliers, évolution visible entre le début et la fin, réceptivité aux feedbacks.</td>
+                            <td class="score">/3</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td colspan="2">TOTAL</td>
+                            <td class="score">/24</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="tips">
+                    <h4>💡 Interprétation des scores</h4>
+                    <ul>
+                        <li><span class="badge excellent">20-24 pts</span> <strong>Excellent :</strong> Projet exceptionnel démontrant une maîtrise complète</li>
+                        <li><span class="badge good">16-19 pts</span> <strong>Très bien :</strong> Projet de qualité avec quelques améliorations possibles</li>
+                        <li><span class="badge satisfactory">12-15 pts</span> <strong>Satisfaisant :</strong> Projet correct répondant aux objectifs principaux</li>
+                        <li><span class="badge insufficient">0-11 pts</span> <strong>Insuffisant :</strong> Projet nécessitant un accompagnement renforcé</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Section 2: Barèmes Détaillés -->
+            <section class="section">
+                <h2>2. Barèmes Détaillés par Critère</h2>
+
+                <!-- Critère 1 -->
+                <div class="rubric">
+                    <h4>📖 Critère 1 : Narration et Storytelling (/3)</h4>
+                    <div class="rubric-grid">
+                        <div class="rubric-level"><strong>3 pts</strong><br>Excellent</div>
+                        <div class="rubric-desc">L'histoire est captivante, clairement structurée (début/milieu/fin ou équivalent), avec une accroche forte et une conclusion mémorable. Le message est compris immédiatement.</div>
+                        
+                        <div class="rubric-level"><strong>2 pts</strong><br>Satisfaisant</div>
+                        <div class="rubric-desc">L'histoire est compréhensible avec une structure identifiable, mais manque de fluidité ou de clarté à certains moments. Le message principal est présent mais pourrait être mieux développé.</div>
+                        
+                        <div class="rubric-level"><strong>1 pt</strong><br>À améliorer</div>
+                        <div class="rubric-desc">L'histoire est confuse, mal structurée ou difficile à suivre. Le message n'est pas clair ou se perd dans des détails superflus.</div>
+                        
+                        <div class="rubric-level"><strong>0 pt</strong><br>Insuffisant</div>
+                        <div class="rubric-desc">Aucune structure narrative identifiable. Pas de message cohérent ou d'intention claire.</div>
+                    </div>
+                </div>
+
+                <!-- Critère 2 -->
+                <div class="rubric">
+                    <h4>✂️ Critère 2 : Maîtrise Technique (/3)</h4>
+                    <div class="rubric-grid">
+                        <div class="rubric-level"><strong>3 pts</strong><br>Excellent</div>
+                        <div class="rubric-desc">Montage/édition impeccable, cuts précis, transitions appropriées, qualité audio/vidéo professionnelle, export optimisé. Aucun défaut technique majeur.</div>
+                        
+                        <div class="rubric-level"><strong>2 pts</strong><br>Satisfaisant</div>
+                        <div class="rubric-desc">Bonne maîtrise des outils avec quelques petites imperfections (léger décalage audio, transition brusque, qualité variable). Globalement fonctionnel.</div>
+                        
+                        <div class="rubric-level"><strong>1 pt</strong><br>À améliorer</div>
+                        <div class="rubric-desc">Défauts techniques fréquents (sauts dans le montage, volume inadapté, flou, pixellisation). Maîtrise partielle des outils.</div>
+                        
+                        <div class="rubric-level"><strong>0 pt</strong><br>Insuffisant</div>
+                        <div class="rubric-desc">Nombreux problèmes techniques rendant le contenu difficile à visionner/écouter. Absence de maîtrise des outils de base.</div>
+                    </div>
+                </div>
+
+                <!-- Critère 3 -->
+                <div class="rubric">
+                    <h4>🎨 Critère 3 : Créativité et Originalité (/3)</h4>
+                    <div class="rubric-grid">
+                        <div class="rubric-level"><strong>3 pts</strong><br>Excellent</div>
+                        <div class="rubric-desc">Approche très originale et personnelle. Prise de risque créative assumée. Le projet se démarque nettement et reflète la personnalité du créateur.</div>
+                        
+                        <div class="rubric-level"><strong>2 pts</strong><br>Satisfaisant</div>
+                        <div class="rubric-desc">Approche créative présente avec quelques éléments originaux, mais reste assez conventionnelle. Début d'expression personnelle visible.</div>
+                        
+                        <div class="rubric-level"><strong>1 pt</strong><br>À améliorer</div>
+                        <div class="rubric-desc">Peu d'originalité, reproduction de formats vus ailleurs sans appropriation personnelle. Manque de prise de risque créative.</div>
+                        
+                        <div class="rubric-level"><strong>0 pt</strong><br>Insuffisant</div>
+                        <div class="rubric-desc">Copie directe de contenus existants sans créativité personnelle. Absence d'effort créatif.</div>
+                    </div>
+                </div>
+
+                <!-- Critère 4 -->
+                <div class="rubric">
+                    <h4>⚡ Critère 4 : Rythme et Dynamisme (/3)</h4>
+                    <div class="rubric-grid">
+                        <div class="rubric-level"><strong>3 pts</strong><br>Excellent</div>
+                        <div class="rubric-desc">Rythme parfaitement maîtrisé, maintient l'attention du début à la fin. Alternance efficace entre moments calmes et dynamiques. Pas de temps mort.</div>
+                        
+                        <div class="rubric-level"><strong>2 pts</strong><br>Satisfaisant</div>
+                        <div class="rubric-desc">Rythme globalement correct avec quelques passages un peu lents ou trop rapides. L'attention se maintient mais avec quelques baisses.</div>
+                        
+                        <div class="rubric-level"><strong>1 pt</strong><br>À améliorer</div>
+                        <div class="rubric-desc">Rythme monotone ou incohérent. Passages trop longs ou trop courts. Difficulté à maintenir l'attention.</div>
+                        
+                        <div class="rubric-level"><strong>0 pt</strong><br>Insuffisant</div>
+                        <div class="rubric-desc">Absence de rythme structuré. Contenu ennuyeux ou décousu rendant difficile le visionnage/l'écoute complet.</div>
+                    </div>
+                </div>
+
+                <!-- Critère 5 -->
+                <div class="rubric">
+                    <h4>🎭 Critère 5 : Identité Visuelle/Sonore (/3)</h4>
+                    <div class="rubric-grid">
+                        <div class="rubric-level"><strong>3 pts</strong><br>Excellent</div>
+                        <div class="rubric-desc">Identité visuelle/sonore très cohérente et harmonieuse. Choix de couleurs, typos, musiques parfaitement adaptés au propos. Ensemble professionnel.</div>
+                        
+                        <div class="rubric-level"><strong>2 pts</strong><br>Satisfaisant</div>
+                        <div class="rubric-desc">Cohérence visuelle/sonore globale avec quelques incohérences mineures (changement de style, contraste insuffisant). Ensemble agréable.</div>
+                        
+                        <div class="rubric-level"><strong>1 pt</strong><br>À améliorer</div>
+                        <div class="rubric-desc">Manque de cohérence, choix esthétiques discutables ou inadaptés. Ensemble peu harmonieux.</div>
+                        
+                        <div class="rubric-level"><strong>0 pt</strong><br>Insuffisant</div>
+                        <div class="rubric-desc">Absence d'identité visuelle/sonore. Choix aléatoires sans réflexion. Résultat désagréable ou illisible/inaudible.</div>
+                    </div>
+                </div>
+
+                <!-- Critère 6 -->
+                <div class="rubric">
+                    <h4>⚖️ Critère 6 : Éthique et Responsabilité (/3)</h4>
+                    <div class="rubric-grid">
+                        <div class="rubric-level"><strong>3 pts</strong><br>Excellent</div>
+                        <div class="rubric-desc">Toutes les ressources utilisées sont libres de droits ou correctement créditées. Message responsable et respectueux. Conscience claire des enjeux éthiques.</div>
+                        
+                        <div class="rubric-level"><strong>2 pts</strong><br>Satisfaisant</div>
+                        <div class="rubric-desc">Ressources majoritairement libres avec quelques oublis de crédits mineurs. Message globalement responsable.</div>
+                        
+                        <div class="rubric-level"><strong>1 pt</strong><br>À améliorer</div>
+                        <div class="rubric-desc">Utilisation de ressources protégées sans autorisation ou absence de crédits. Message peu réfléchi sur les aspects éthiques.</div>
+                        
+                        <div class="rubric-level"><strong>0 pt</strong><br>Insuffisant</div>
+                        <div class="rubric-desc">Violation claire des droits d'auteur ou message problématique (discriminatoire, dangereux, irresponsable).</div>
+                    </div>
+                </div>
+
+                <!-- Critère 7 -->
+                <div class="rubric">
+                    <h4>✅ Critère 7 : Respect des Consignes (/3)</h4>
+                    <div class="rubric-grid">
+                        <div class="rubric-level"><strong>3 pts</strong><br>Excellent</div>
+                        <div class="rubric-desc">Toutes les consignes respectées : durée exacte, format correct (MP4 1080p ou équivalent), dépôt dans les délais, tous les éléments demandés présents.</div>
+                        
+                        <div class="rubric-level"><strong>2 pts</strong><br>Satisfaisant</div>
+                        <div class="rubric-desc">Consignes globalement respectées avec quelques écarts mineurs (durée +/- 10 secondes, dépôt avec 1h de retard).</div>
+                        
+                        <div class="rubric-level"><strong>1 pt</strong><br>À améliorer</div>
+                        <div class="rubric-desc">Plusieurs consignes non respectées (durée très différente, format inadapté, retard significatif).</div>
+                        
+                        <div class="rubric-level"><strong>0 pt</strong><br>Insuffisant</div>
+                        <div class="rubric-desc">Aucune consigne respectée ou rendu non conforme (fichier corrompu, impossible à lire, non déposé).</div>
+                    </div>
+                </div>
+
+                <!-- Critère 8 -->
+                <div class="rubric">
+                    <h4>📈 Critère 8 : Progression et Engagement (/3)</h4>
+                    <div class="rubric-grid">
+                        <div class="rubric-level"><strong>3 pts</strong><br>Excellent</div>
+                        <div class="rubric-desc">Participation active à toutes les séances, progression spectaculaire visible entre le début et la fin. Réceptivité totale aux feedbacks et amélioration continue.</div>
+                        
+                        <div class="rubric-level"><strong>2 pts</strong><br>Satisfaisant</div>
+                        <div class="rubric-desc">Bonne participation avec quelques absences mineures. Progression visible. Écoute des feedbacks avec quelques ajustements.</div>
+                        
+                        <div class="rubric-level"><strong>1 pt</strong><br>À améliorer</div>
+                        <div class="rubric-desc">Participation irrégulière. Progression limitée. Peu de prise en compte des feedbacks.</div>
+                        
+                        <div class="rubric-level"><strong>0 pt</strong><br>Insuffisant</div>
+                        <div class="rubric-desc">Absences répétées ou désengagement. Aucune progression observable. Refus des feedbacks.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: Guide de Feedback -->
+            <section class="section">
+                <h2>3. Guide de Feedback Constructif</h2>
+
+                <div class="tips">
+                    <h4>✍️ Structure recommandée du feedback</h4>
+                    <ol style="margin-left: 20px;">
+                        <li><strong>Introduction positive :</strong> Commencez par souligner un élément fort du projet</li>
+                        <li><strong>Analyse détaillée :</strong> Reprenez 2-3 critères avec commentaires spécifiques</li>
+                        <li><strong>Axes d'amélioration :</strong> Formulez 2-3 suggestions concrètes et actionnables</li>
+                        <li><strong>Encouragement final :</strong> Terminez par une note positive et encourageante</li>
+                    </ol>
+                </div>
+
+                <h3>Exemples de Formulations</h3>
+
+                <div class="rubric">
+                    <h4>✅ Formulations encourageantes</h4>
+                    <ul style="margin-left: 20px;">
+                        <li>"J'ai adoré ton approche créative sur [élément précis], c'est exactement ce type de prise de risque qu'on encourage !"</li>
+                        <li>"La progression entre ta première ébauche et ton rendu final est impressionnante, bravo pour ton investissement"</li>
+                        <li>"Ton choix de [musique/couleurs/rythme] renforce parfaitement le message que tu veux faire passer"</li>
+                        <li>"Ta maîtrise de [outil] après seulement 6 jours montre une vraie capacité d'apprentissage"</li>
+                    </ul>
+                </div>
+
+                <div class="rubric">
+                    <h4>🔧 Formulations constructives pour les axes d'amélioration</h4>
+                    <ul style="margin-left: 20px;">
+                        <li>"Pour affiner ton montage, essaie de raccourcir les plans de 1-2 secondes autour de [timestamp] pour dynamiser le rythme"</li>
+                        <li>"L'équilibre audio pourrait être amélioré : baisse la musique à -15 dB entre [timestamps] pour que ta voix ressorte mieux"</li>
+                        <li>"Ton concept est excellent ! Pour la prochaine version, structure-le avec une introduction plus accrocheuse (5-10 secondes max)"</li>
+                        <li>"Pense à vérifier les crédits : la musique utilisée à [timestamp] nécessite une attribution selon sa licence CC-BY"</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Actions -->
+            <div class="actions">
+                <button onclick="window.print()" class="btn btn-primary">🖨️ Imprimer cette grille</button>
+                <a href="index.html" class="btn btn-secondary">← Retour à l'accueil</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

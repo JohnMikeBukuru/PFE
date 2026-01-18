@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jour 3 - Maîtriser le Montage Vidéo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .presentation {
+            width: 100%;
+            max-width: 1200px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            padding: 60px;
+            min-height: 600px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            font-size: 3.5em;
+            color: #667eea;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            color: #764ba2;
+            margin-bottom: 30px;
+            border-bottom: 4px solid #667eea;
+            padding-bottom: 15px;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            color: #667eea;
+            margin: 25px 0 15px 0;
+        }
+
+        p, li {
+            font-size: 1.3em;
+            line-height: 1.8;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            padding-left: 40px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.5em;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffd700 0%, #ffed4e 100%);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: #f8f9fa;
+            border-top: 2px solid #e9ecef;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-weight: 600;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .slide-counter {
+            font-size: 1.2em;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+
+        .interface-demo {
+            background: #2d2d2d;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+        }
+
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .timeline:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: #667eea;
+            z-index: -1;
+        }
+
+        .timeline-item {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 3px solid #667eea;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .success {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .table th, .table td {
+            border: 2px solid #667eea;
+            padding: 15px;
+            text-align: left;
+        }
+
+        .table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+        }
+
+        .table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .kbd {
+            background: #333;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-weight: bold;
+            margin: 0 5px;
+            box-shadow: 0 3px 0 #000;
+        }
+
+        .challenge-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .challenge-box h3 {
+            color: white;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 30px;
+            }
+            h1 { font-size: 2em; }
+            h2 { font-size: 1.8em; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation">
+        <!-- Slide 1 -->
+        <div class="slide active">
+            <h1>🎬 JOUR 3</h1>
+            <h1 style="font-size: 2.5em; margin-top: 20px;">Maîtriser le Montage Vidéo</h1>
+            <p style="text-align: center; font-size: 1.5em; margin-top: 40px; color: #666;">
+                Studio Créatif Numérique
+            </p>
+            <div style="text-align: center; margin-top: 60px;">
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 15px; display: inline-block;">
+                    <p style="font-size: 1.8em; margin: 0; color: white;">🎯 Objectif du jour</p>
+                    <p style="font-size: 1.3em; margin-top: 10px; color: white;">Créer une vidéo montée de 45 secondes<br>qui raconte une histoire</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="slide">
+            <h2>📋 Rappel du Jour 2</h2>
+            <h3>Ce que vous avez appris hier :</h3>
+            <ul>
+                <li><span class="emoji">📸</span> Règle des tiers et composition visuelle</li>
+                <li><span class="emoji">💡</span> Gestion de la lumière naturelle</li>
+                <li><span class="emoji">🎬</span> Types de plans (gros plan, plan moyen, plan large)</li>
+                <li><span class="emoji">🎤</span> Importance du son (micro proche de la source)</li>
+            </ul>
+            <div class="success" style="margin-top: 40px;">
+                <h3 style="color: #28a745; margin: 0 0 15px 0;">✅ Vos rushes sont prêts</h3>
+                <p style="margin: 0;">Aujourd'hui, nous allons transformer ces plans en une vraie histoire montée !</p>
+            </div>
+        </div>
+
+        <!-- Slide 3 -->
+        <div class="slide">
+            <h2>🎯 Objectifs de la séance</h2>
+            <div class="grid-2">
+                <div class="box">
+                    <h3 style="color: #667eea; margin-top: 0;">Compétences techniques</h3>
+                    <ul style="font-size: 1.1em;">
+                        <li>Naviguer dans DaVinci Resolve</li>
+                        <li>Importer et organiser médias</li>
+                        <li>Réaliser des cuts précis</li>
+                        <li>Ajouter transitions et audio</li>
+                        <li>Exporter en qualité web</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h3 style="color: #764ba2; margin-top: 0;">Compétences créatives</h3>
+                    <ul style="font-size: 1.1em;">
+                        <li>Créer un rythme visuel</li>
+                        <li>Synchroniser image et son</li>
+                        <li>Raconter une histoire en 45s</li>
+                        <li>Analyser un montage</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4 -->
+        <div class="slide">
+            <h2>🖥️ Interface DaVinci Resolve</h2>
+            <div class="interface-demo">
+                <p style="margin-bottom: 15px; font-size: 1.2em; color: #ffd700;">▼ Les 7 onglets principaux</p>
+                <p><span class="highlight" style="background: #667eea; color: white;">MEDIA</span> → Importer fichiers</p>
+                <p><span class="highlight" style="background: #667eea; color: white;">CUT</span> → Montage rapide</p>
+                <p><span class="highlight" style="background: #ffd700; color: #333;">EDIT ⭐</span> → Montage précis (on l'utilise aujourd'hui)</p>
+                <p><span class="highlight" style="background: #667eea; color: white;">FUSION</span> → Effets spéciaux</p>
+                <p><span class="highlight" style="background: #667eea; color: white;">COLOR</span> → Étalonnage couleurs</p>
+                <p><span class="highlight" style="background: #667eea; color: white;">FAIRLIGHT</span> → Édition audio</p>
+                <p><span class="highlight" style="background: #667eea; color: white;">DELIVER</span> → Export final</p>
+            </div>
+            <p style="text-align: center; margin-top: 30px; font-size: 1.4em;">
+                👉 Nous restons dans l'onglet <span class="highlight">EDIT</span> aujourd'hui
+            </p>
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide">
+            <h2>📦 Zones clés de l'onglet EDIT</h2>
+            <div style="background: #f8f9fa; padding: 30px; border-radius: 15px; border: 3px solid #667eea;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <h3 style="color: #667eea;">1️⃣ Media Pool</h3>
+                        <p>Bibliothèque de vos fichiers<br>(vidéos, audio, images)</p>
+                    </div>
+                    <div>
+                        <h3 style="color: #667eea;">2️⃣ Viewer</h3>
+                        <p>Prévisualisation de votre vidéo<br>(avant export)</p>
+                    </div>
+                    <div>
+                        <h3 style="color: #764ba2;">3️⃣ Timeline</h3>
+                        <p><strong>Zone de montage principale</strong><br>Vous assemblez vos clips ici</p>
+                    </div>
+                    <div>
+                        <h3 style="color: #764ba2;">4️⃣ Inspector</h3>
+                        <p>Paramètres du clip sélectionné<br>(vitesse, volume, effets)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide">
+            <h2>📂 Import et Organisation</h2>
+            <h3>Étape 1 : Créer un nouveau projet</h3>
+            <p><span class="kbd">File</span> → <span class="kbd">New Project</span> → Nom : "MonProjet_Stage"</p>
+            
+            <h3 style="margin-top: 30px;">Étape 2 : Importer vos rushes</h3>
+            <p><span class="kbd">File</span> → <span class="kbd">Import Media</span> ou glisser-déposer dans Media Pool</p>
+            
+            <h3 style="margin-top: 30px;">Étape 3 : Organiser en bins (dossiers)</h3>
+            <div class="box" style="margin-top: 15px;">
+                <p><strong>📁 Vidéos</strong> → Tous vos clips vidéo</p>
+                <p><strong>🎵 Audio</strong> → Musiques et bruitages</p>
+                <p><strong>🎨 Graphismes</strong> → Images, titres, logos</p>
+            </div>
+            <div class="warning" style="margin-top: 20px;">
+                <p><strong>⚠️ Bonne pratique :</strong> Nommez vos fichiers clairement<br>
+                Exemple : "Plan1_GrosPlaniPhone.mp4" plutôt que "VID_2024.mp4"</p>
+            </div>
+        </div>
+
+        <!-- Slide 7 -->
+        <div class="slide">
+            <h2>✂️ Techniques de Coupe (Cuts)</h2>
+            <table class="table">
+                <tr>
+                    <th>Outil</th>
+                    <th>Raccourci</th>
+                    <th>Utilisation</th>
+                </tr>
+                <tr>
+                    <td><strong>Blade Tool</strong></td>
+                    <td><span class="kbd">B</span></td>
+                    <td>Couper un clip en deux</td>
+                </tr>
+                <tr>
+                    <td><strong>Trim Edit</strong></td>
+                    <td><span class="kbd">T</span></td>
+                    <td>Ajuster les bords d'un clip</td>
+                </tr>
+                <tr>
+                    <td><strong>Ripple Delete</strong></td>
+                    <td><span class="kbd">Shift + Del</span></td>
+                    <td>Supprimer + combler le vide automatiquement</td>
+                </tr>
+                <tr>
+                    <td><strong>Points In/Out</strong></td>
+                    <td><span class="kbd">I</span> / <span class="kbd">O</span></td>
+                    <td>Définir début/fin d'un extrait</td>
+                </tr>
+            </table>
+            <p style="text-align: center; margin-top: 30px; font-size: 1.3em;">
+                💡 <strong>Astuce :</strong> Utilisez les raccourcis clavier = gain de temps énorme !
+            </p>
+        </div>
+
+        <!-- Slide 8 -->
+        <div class="slide">
+            <h2>🔄 Transitions et Effets</h2>
+            <h3>Accéder aux transitions</h3>
+            <p>Onglet <span class="highlight">Effects</span> → <span class="highlight">Video Transitions</span></p>
+            
+            <div class="grid-2" style="margin-top: 30px;">
+                <div class="box">
+                    <h3 style="color: #28a745; margin-top: 0;">✅ Transitions recommandées</h3>
+                    <ul>
+                        <li><strong>Cross Dissolve</strong> (fondu enchaîné) → changement de scène fluide</li>
+                        <li><strong>Dip to Color</strong> → passage au noir/blanc</li>
+                    </ul>
+                </div>
+                <div class="box">
+                    <h3 style="color: #dc3545; margin-top: 0;">❌ À éviter</h3>
+                    <ul>
+                        <li>Transitions "fantaisistes" (étoiles, spirales...)</li>
+                        <li>Trop de transitions = effet amateur</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="warning" style="margin-top: 30px;">
+                <p><strong>🎓 Règle d'or :</strong> Sobriété = Professionnalisme<br>
+                Une bonne vidéo utilise 80% de cuts francs et 20% de transitions douces</p>
+            </div>
+        </div>
+
+        <!-- Slide 9 -->
+        <div class="slide">
+            <h2>🎵 Ajouter de l'Audio</h2>
+            <h3>Étape 1 : Importer votre musique</h3>
+            <p>Glissez votre fichier audio (MP3/WAV) dans le bin <strong>Audio</strong></p>
+            
+            <h3 style="margin-top: 25px;">Étape 2 : Placer sur la timeline</h3>
+            <p>Glissez la piste audio <strong>sous</strong> vos clips vidéo (piste audio séparée)</p>
+            
+            <h3 style="margin-top: 25px;">Étape 3 : Ajuster le volume</h3>
+            <p>Sélectionnez le clip audio → <span class="kbd">Inspector</span> → <span class="kbd">Volume</span></p>
+            
+            <div class="success" style="margin-top: 30px;">
+                <h3 style="color: #28a745; margin: 0 0 15px 0;">💡 Conseil pro</h3>
+                <ul style="margin: 0;">
+                    <li>Musique de fond : -12 à -18 dB</li>
+                    <li>Voix principale : 0 à -6 dB</li>
+                    <li>Testez avec un casque pour vérifier la balance</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 10 -->
+        <div class="slide">
+            <h2>💾 Exporter votre Vidéo</h2>
+            <div class="timeline">
+                <div class="timeline-item">1<br>DELIVER</div>
+                <div class="timeline-item">2<br>MP4</div>
+                <div class="timeline-item">3<br>H.264</div>
+                <div class="timeline-item">4<br>1080p</div>
+                <div class="timeline-item">5<br>Export</div>
+            </div>
+            
+            <div class="box" style="margin-top: 40px;">
+                <h3 style="margin-top: 0;">⚙️ Paramètres recommandés</h3>
+                <ul>
+                    <li><strong>Format :</strong> MP4</li>
+                    <li><strong>Codec :</strong> H.264 (universel)</li>
+                    <li><strong>Résolution :</strong> 1920x1080 (Full HD)</li>
+                    <li><strong>Framerate :</strong> 30 fps ou 25 fps</li>
+                    <li><strong>Qualité :</strong> Automatic (ou Bitrate 10 Mbps)</li>
+                </ul>
+            </div>
+            
+            <p style="text-align: center; margin-top: 30px; font-size: 1.3em;">
+                ⏱️ <strong>Temps d'export :</strong> environ 2-5 minutes pour une vidéo de 1 minute
+            </p>
+        </div>
+
+        <!-- Slide 11 -->
+        <div class="slide">
+            <div class="challenge-box">
+                <h3>🏆 SPEED CHALLENGE</h3>
+                <h2 style="color: white; font-size: 2.5em; margin: 20px 0;">Le Montage Rythmique</h2>
+                <div style="background: rgba(255,255,255,0.2); padding: 25px; border-radius: 10px; margin-top: 20px;">
+                    <p style="font-size: 1.5em; margin-bottom: 15px; color: white;"><strong>⏱️ Durée : 20 MINUTES</strong></p>
+                    <p style="font-size: 1.3em; color: white;">Créez un montage ultra-dynamique de <strong>15-20 secondes</strong></p>
+                </div>
+            </div>
+            <div class="box" style="margin-top: 30px;">
+                <h3>📋 Règles du challenge</h3>
+                <ul>
+                    <li>✅ <strong>Minimum 10 plans</strong> (cuts très courts)</li>
+                    <li>✅ Chaque cut doit tomber sur un <strong>temps fort de la musique</strong></li>
+                    <li>✅ Utilisez VOS rushes ou vidéos stock (Pexels)</li>
+                    <li>✅ <strong>Maximum 1 transition</strong> autorisée</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 12 -->
+        <div class="slide">
+            <h2>📊 Grille d'Évaluation du Montage</h2>
+            <table class="table">
+                <tr>
+                    <th>Critère</th>
+                    <th style="width: 25%;">Points</th>
+                </tr>
+                <tr>
+                    <td><strong>📖 Narration</strong><br>La vidéo raconte une histoire claire et structurée</td>
+                    <td style="text-align: center; font-size: 1.3em;">/3</td>
+                </tr>
+                <tr>
+                    <td><strong>✂️ Technique de montage</strong><br>Cuts propres, raccords invisibles, maîtrise des outils</td>
+                    <td style="text-align: center; font-size: 1.3em;">/3</td>
+                </tr>
+                <tr>
+                    <td><strong>⚡ Rythme</strong><br>Le montage maintient l'attention, tempo adapté</td>
+                    <td style="text-align: center; font-size: 1.3em;">/3</td>
+                </tr>
+                <tr>
+                    <td><strong>🎵 Intégration audio</strong><br>Musique bien choisie, volume équilibré, synchronisation</td>
+                    <td style="text-align: center; font-size: 1.3em;">/3</td>
+                </tr>
+                <tr>
+                    <td><strong>✅ Respect des consignes</strong><br>Durée, format, dépôt dans les délais</td>
+                    <td style="text-align: center; font-size: 1.3em;">/3</td>
+                </tr>
+                <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <td style="color: white;"><strong>TOTAL</strong></td>
+                    <td style="text-align: center; font-size: 1.5em; color: white;"><strong>/15</strong></td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Slide 13 -->
+        <div class="slide">
+            <h2>⌨️ Raccourcis Clavier Essentiels</h2>
+            <div class="grid-2">
+                <div class="box">
+                    <h3 style="margin-top: 0;">Navigation</h3>
+                    <p><span class="kbd">Espace</span> Lecture / Pause</p>
+                    <p><span class="kbd">←</span> <span class="kbd">→</span> Frame par frame</p>
+                    <p><span class="kbd">Home</span> Début timeline</p>
+                    <p><span class="kbd">End</span> Fin timeline</p>
+                </div>
+                <div class="box">
+                    <h3 style="margin-top: 0;">Édition</h3>
+                    <p><span class="kbd">B</span> Blade (couper)</p>
+                    <p><span class="kbd">T</span> Trim</p>
+                    <p><span class="kbd">I</span> Point In</p>
+                    <p><span class="kbd">O</span> Point Out</p>
+                </div>
+                <div class="box">
+                    <h3 style="margin-top: 0;">Suppression</h3>
+                    <p><span class="kbd">Del</span> Supprimer</p>
+                    <p><span class="kbd">Shift + Del</span> Ripple Delete</p>
+                    <p><span class="kbd">Ctrl + Z</span> Annuler</p>
+                </div>
+                <div class="box">
+                    <h3 style="margin-top: 0;">Affichage</h3>
+                    <p><span class="kbd">Ctrl + +</span> Zoom avant</p>
+                    <p><span class="kbd">Ctrl + -</span> Zoom arrière</p>
+                    <p><span class="kbd">Shift + Z</span> Fit timeline</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14 -->
+        <div class="slide">
+            <h2>🎯 Mission de l'après-midi</h2>
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 20px; text-align: center;">
+                <h3 style="color: white; font-size: 2.2em; margin-bottom: 30px;">Premier montage de votre projet final</h3>
+                <p style="font-size: 1.4em; line-height: 1.8; color: white;">
+                    <strong>⏱️ 14h00-16h00 : Travail autonome</strong><br><br>
+                    📹 Durée : 45-60 secondes<br>
+                    📖 Structure en 3 actes : Intro (10s) / Développement (30s) / Conclusion (10s)<br>
+                    🎵 Ajoutez une musique de fond<br>
+                    💾 Exportez en MP4 (1080p)<br>
+                    📤 <span class="highlight" style="background: #ffd700; color: #333;">Dépôt sur Classroom avant 18h</span>
+                </p>
+            </div>
+            
+            <div class="success" style="margin-top: 30px;">
+                <h3 style="color: #28a745; margin: 0 0 15px 0;">📚 Ressources disponibles</h3>
+                <ul style="margin: 0;">
+                    <li>Tutoriel replay de ce matin (Classroom)</li>
+                    <li>Canal Discord #questions-montage</li>
+                    <li>Permanence formateur 16h-16h30 en visio</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="prevBtn" onclick="changeSlide(-1)">◀ Précédent</button>
+        <span class="slide-counter">
+            <span id="currentSlide">1</span> / <span id="totalSlides">14</span>
+        </span>
+        <button id="nextBtn" onclick="changeSlide(1)">Suivant ▶</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        // Initialisation
+        document.getElementById('totalSlides').textContent = totalSlides;
+        updateButtons();
+
+        function changeSlide(direction) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide += direction;
+            
+            // Limiter aux bornes
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+            
+            slides[currentSlide].classList.add('active');
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            updateButtons();
+        }
+
+        function updateButtons() {
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        // Navigation clavier
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'ArrowLeft') {
+                changeSlide(-1);
+            } else if (event.key === 'ArrowRight' || event.key === ' ') {
+                event.preventDefault();
+                changeSlide(1);
+            } else if (event.key === 'Home') {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = 0;
+                slides[currentSlide].classList.add('active');
+                document.getElementById('currentSlide').textContent = 1;
+                updateButtons();
+            } else if (event.key === 'End') {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = totalSlides - 1;
+                slides[currentSlide].classList.add('active');
+                document.getElementById('currentSlide').textContent = totalSlides;
+                updateButtons();
+            }
+        });
+    </script>
+</body>
+</html>

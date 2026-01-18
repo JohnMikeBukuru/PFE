@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studio Créatif Numérique - Formation à Distance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h1 {
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+
+        nav a:hover {
+            opacity: 0.8;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s;
+        }
+
+        .hero p {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            opacity: 0.95;
+            animation: fadeInUp 1s;
+        }
+
+        .hero .btn {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2em;
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeInUp 1.2s;
+        }
+
+        .hero .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Section Title */
+        .section-title {
+            text-align: center;
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 50px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 2px;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            border-top: 5px solid #667eea;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .card-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 1.1em;
+        }
+
+        .card .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 60px 20px;
+            margin: 60px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-item h4 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .stat-item p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        /* About Section */
+        .about {
+            background: white;
+            padding: 60px 20px;
+            margin: 60px 0;
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-content p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 60px auto;
+        }
+
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #667eea;
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .timeline-item:nth-child(odd) {
+            padding-right: 50%;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            padding-left: 50%;
+            text-align: left;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 25px;
+            width: 20px;
+            height: 20px;
+            background: #667eea;
+            border: 4px solid white;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 0 4px #667eea;
+        }
+
+        .timeline-content h4 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: #f8f9fa;
+            padding: 60px 20px;
+        }
+
+        .contact-info {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 30px;
+        }
+
+        .contact-item {
+            margin: 20px 0;
+            font-size: 1.2em;
+        }
+
+        .contact-item strong {
+            color: #667eea;
+        }
+
+        /* Footer */
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+        }
+
+        footer p {
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+
+            .hero h2 {
+                font-size: 2em;
+            }
+
+            .hero p {
+                font-size: 1.2em;
+            }
+
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                padding-left: 60px !important;
+                padding-right: 0 !important;
+                text-align: left !important;
+            }
+
+            .timeline-item::before {
+                left: 20px !important;
+            }
+        }
+
+        /* Menu Mobile */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <h1>🎬 Studio Créatif Numérique</h1>
+            <button class="mobile-menu-btn">☰</button>
+            <ul>
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#documents">Documents</a></li>
+                <li><a href="#programme">Programme</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="accueil">
+        <h2>Formation à Distance des Adolescents</h2>
+        <p>Devenez créateur de contenu numérique en 6 jours</p>
+        <a href="#documents" class="btn">Découvrir le programme 🚀</a>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h4>6</h4>
+                <p>Jours intensifs</p>
+            </div>
+            <div class="stat-item">
+                <h4>12-15</h4>
+                <p>Participants max</p>
+            </div>
+            <div class="stat-item">
+                <h4>100%</h4>
+                <p>À distance</p>
+            </div>
+            <div class="stat-item">
+                <h4>15-18</h4>
+                <p>Ans (lycéens)</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="container">
+            <h2 class="section-title">À Propos du Projet</h2>
+            <div class="about-content">
+                <p>
+                    <strong>Studio Créatif Numérique</strong> est un dispositif de formation innovant destiné aux adolescents 
+                    de 15 à 18 ans. Ce stage intensif de 6 jours leur permet de développer des compétences professionnelles 
+                    en création de contenu numérique (vidéo, podcast, design graphique) tout en adoptant une posture responsable 
+                    vis-à-vis du numérique.
+                </p>
+                <p>
+                    Entièrement dispensée à distance pendant les vacances scolaires, cette formation combine sessions synchrones 
+                    en visioconférence et travail autonome, avec un accompagnement personnalisé et des outils gratuits accessibles à tous.
+                </p>
+                <p>
+                    Le projet final permet aux participants de créer un contenu complet (vidéo, podcast ou création graphique) 
+                    qu'ils pourront valoriser dans leur portfolio personnel et sur les réseaux sociaux.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documents Section -->
+    <section class="container" id="documents">
+        <h2 class="section-title">📚 Documents du Projet</h2>
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon">📄</div>
+                <h3>Dossier Complet</h3>
+                <p>Analyse, conception pédagogique et recommandations (20 pages)</p>
+                <a href="dossier-pfe.html" class="btn">Consulter</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">📊</div>
+                <h3>Diaporama Jour 3</h3>
+                <p>Support interactif de la séance montage vidéo (14 slides)</p>
+                <a href="diaporama-jour3.html" class="btn">Voir les slides</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">📅</div>
+                <h3>Planning des 6 Jours</h3>
+                <p>Gantt interactif avec détails de chaque activité</p>
+                <a href="planning-6jours.html" class="btn">Explorer</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🛠️</div>
+                <h3>Fiche Technique</h3>
+                <p>Prérequis matériel et logiciels pour participants</p>
+                <a href="fiche-technique.html" class="btn">Télécharger</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">✅</div>
+                <h3>Grille d'Évaluation</h3>
+                <p>Critères d'évaluation des projets finaux</p>
+                <a href="grille-evaluation.html" class="btn">Consulter</a>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">🎓</div>
+                <h3>Certificat Type</h3>
+                <p>Modèle de certificat de compétences</p>
+                <a href="certificat.html" class="btn">Voir le modèle</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programme Timeline -->
+    <section class="container" id="programme">
+        <h2 class="section-title">🗓️ Programme des 6 Jours</h2>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Jour 1 - Storytelling Visuel</h4>
+                    <p>Comprendre les principes narratifs du contenu numérique. Créer son premier pitch de projet.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Jour 2 - Tournage Vidéo</h4>
+                    <p>Maîtriser les techniques de cadrage, lumière et son. Tournage des premiers rushes du projet.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Jour 3 - Montage Vidéo</h4>
+                    <p>Apprendre DaVinci Resolve ou CapCut. Réaliser le premier montage de son projet final.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Jour 4 - Design Graphique</h4>
+                    <p>Créer une identité visuelle cohérente avec Canva. Designer miniatures et bannières.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Jour 5 - Audio & Podcast</h4>
+                    <p>Maîtriser l'enregistrement et l'édition audio. Finaliser la bande-son du projet.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h4>Jour 6 - Éthique & Présentation</h4>
+                    <p>Droits d'auteur et licences. Soirée de projection finale avec remise des certificats.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-info">
+            <h3>📧 Informations de Contact</h3>
+            <div class="contact-item">
+                <strong>Email :</strong> mikbukurujohn97@gmail.com
+            </div>
+            <div class="contact-item">
+                <strong>Formateur :</strong> NIYUKURI Mike
+            </div>
+            <div class="contact-item">
+                <strong>Établissement :</strong> Web4Jobs
+            </div>
+            <div class="contact-item">
+                <strong>Année :</strong> 2024-2025
+            </div>
+            <div style="margin-top: 40px;">
+                <a href="mailto:contact@studiocreative.fr" class="btn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 30px; border-radius: 50px; text-decoration: none; font-weight: 600;">
+                    Nous contacter ✉️
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024-2025 Studio Créatif Numérique - Projet de Fin d'Études</p>
+            <p>Formation à Distance des Adolescents | Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling pour les liens d'ancrage
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animation au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card, .timeline-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
